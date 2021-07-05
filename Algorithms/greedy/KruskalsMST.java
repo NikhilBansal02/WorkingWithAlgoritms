@@ -1,7 +1,15 @@
+/*Time Complexity: O(ElogE) or O(ElogV).
+Sorting of edges takes O(ELogE) time.
+After sorting, we iterate through all edges and apply the find-union algorithm.
+The find and union operations can take at most O(LogV) time. 
+So overall complexity is O(ELogE + ELogV) time. 
+The value of E can be at most O(V2), so O(LogV) is O(LogE) the same. 
+Therefore, the overall time complexity is O(ElogE) or O(ElogV).
+The below code is solely written by me and have used implementation of find and union algorithm.
+*/
 package greedy;
 
 import java.util.Arrays;
-import java.util.stream.Stream;
 
 public class KruskalsMST {
 
@@ -67,16 +75,15 @@ public class KruskalsMST {
 		
 		
 		sortEdgesByWeightAsc(graph);
-//		Stream.of(graph.edge)
-//		.forEach( e ->{
-//				System.out.print(e.src+" "+e.dest+" "+e.weight);
-//				System.out.println();
-//		});
 		
 		buildMST(graph);
 	}
 	
-	public static void sortEdgesByWeightAsc(WeightedGraph graph) {
+	/**
+	 * @param graph
+	 * Sorting will take O(ELogE)
+	 */
+	public static void sortEdgesByWeightAsc(WeightedGraph graph) { 
 		
 		Arrays.sort(graph.edge,new WeightedEdgeComparator());
 		
@@ -105,7 +112,6 @@ public class KruskalsMST {
 				
 				mstEdges++;
 				System.out.println("Selected Edges are :" +graph.edge[i].src+" "+graph.edge[i].dest);
-			//	System.out.println("Mst Egdes : "+mstEdges);
 				if(mstEdges == (graph.V-1)) {
 					break;
 				}
@@ -117,6 +123,12 @@ public class KruskalsMST {
 		
 	}
 
+	/**
+	 * @param parent
+	 * @param i
+	 * @return
+	 * Find and Union TC is O(LogV)
+	 */
 	public static int find(Integer[] parent, int i) {
 		
 		if(parent[i] == -1)
